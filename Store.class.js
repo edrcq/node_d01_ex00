@@ -1,11 +1,16 @@
+const fs = require('fs')
 const { v4: uuidv4 } = require('uuid');
 
 class Store {
 
-    constructor(name, { path } = {}) {
+    constructor(name, options = {}) {
         this.name = name || ''
-        this.path = path || undefined;
+        this.path = options.path || undefined;
         this.content = {}
+        this.interval = undefined;
+
+        this.autoLoad()
+        this.autoSave()
     }
 
     getById(id) {
@@ -45,7 +50,34 @@ class Store {
         return false
     }
 
+    autoLoad() {
+        if (!this.path) { return; }
+        fs.readFile(this.path, (err, data) => {
+            if (!err)
+                this.content = JSON.parse(data.toString('utf-8'))
+            else
+                console.error('CANNOT READ', this.path)
+        })
+    }
 
+    autoSave() {
+        if (!this.path) { return; }
+        this.interval = setInterval(() => {
+            this.save()
+        }, 5000)
+    }
+
+    save() {
+        if (!this.path) { return Promise.resolve(false); }
+        return new Promise((resolve, reject) => {
+            fs.writeFile(this.path, JSON.stringify(this.content), (err) => {
+                if (err) {
+                    return reject(err)
+                }
+                resolve(true)
+            })
+        })
+    }
 }
 
-module.exports = Store
+exports.Store = Store

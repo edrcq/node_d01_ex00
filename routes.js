@@ -2,10 +2,12 @@ const { Router } = require('express')
 const router = Router()
 const store = require('./store')
 
-router.use((req, res, next) => {
-    console.log('hello')
-    next()
-})
+// exemple de middleware uniquement sur ce router
+
+// router.use((req, res, next) => {
+//     console.log('hello')
+//     next()
+// })
 
 // GET ONE
 router.get('/resource/:id', (req, res) => {
