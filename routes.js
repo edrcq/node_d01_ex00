@@ -9,6 +9,10 @@ const store = require('./store')
 //     next()
 // })
 
+router.get('/', (req, res) => {
+    res.sendfile('html/index.html')
+})
+
 // GET ONE
 router.get('/resource/:id', (req, res) => {
     // const id = req.params.id
