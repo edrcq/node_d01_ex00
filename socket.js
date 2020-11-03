@@ -12,6 +12,8 @@ function initSocketServer(server) {
             console.log('client try to login', data)
             client_socket.broadcast.emit('other_login', data)
             client_socket.emit('login', { success: true })
+            console.log(data.pseudo)
+            client_socket.pseudo = data.pseudo
         })
 
 

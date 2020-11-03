@@ -6,7 +6,7 @@
     <title>Test Socket.io</title>
 </head>
 <body>
-<input type="text" name="">
+<input type="text" id="pseudo">
 <button onclick="login()">login</button>
     <script src="/front/socket.io.js"></script>
 <div style="display:none" id="chatBox">
@@ -24,6 +24,7 @@
             console.log('another person just logged in', data)
         })
         function login(){
+            this.pseudo = document.getElementById("pseudo").value;
             socket.emit('login', { pseudo: this.pseudo })
         }
     </script>
