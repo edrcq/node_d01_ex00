@@ -64,7 +64,7 @@ class Store {
         if (!this.path) { return; }
         this.interval = setInterval(() => {
             this.save()
-        }, 5000)
+        }, 30000)
     }
 
     save() {
