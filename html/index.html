@@ -13,7 +13,21 @@
             <button @click="tryLogin">Se connecter</button>
         </div>
     </div>
-    <div id="app" style="display: none;"></div>
+    <div id="app">
+        <div v-if="connected === true">
+            <h1>Chat !</h1>
+            <div>
+                <button @click="alertList">Voir les personnes connectées {{ count }}</button>
+            </div>
+            <div>
+                <textarea ref="thechat" :value="text" name="" cols="30" rows="10"></textarea>
+                <div>
+                    <input @keypress.enter="sendMessage" v-model="message" />
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
     <script src="/front/socket.io.js"></script>
@@ -22,10 +36,18 @@
 
         socket.on('login', data => {
             console.log('login response !', data)
+            app.connected = data.success
+            app.pseudo = data.pseudo
+            app.count = data.count
         })
 
         socket.on('other_login', data => {
             console.log('another person just logged in', data)
+            app.count = data.count
+        })
+
+        socket.on('new_msg', data => {
+            app.messages.push(data)
         })
     </script>
 
@@ -43,6 +65,43 @@
                     if (this.pseudo.length > 0) {
                         socket.emit('login', { pseudo: this.pseudo })
                     }
+                }
+            }
+        })
+
+        const app = new Vue({
+            el: '#app',
+
+            data() { return {
+                connected: false,
+                pseudo: '',
+                users: [],
+                messages: [{ pseudo: 'admin', text: 'Welcome!' }],
+                count: 0,
+                message: '',
+            }},
+
+            computed: {
+                text() {
+                    let allText = ''
+                    for (let msg of this.messages) {
+                        allText += msg.pseudo + ' : ' + msg.text + '\n'
+                    }
+                    return allText
+                }
+            },
+
+            methods: {
+                sendMessage() {
+                    socket.emit('send_msg', {
+                        text: this.message,
+                    })
+
+                    this.message = ''
+                },
+
+                alertList() {
+
                 }
             }
         })
