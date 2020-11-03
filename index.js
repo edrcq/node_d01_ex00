@@ -1,1 +1,4 @@
-const webserver = require('./webserver')
+const { initWebServer } = require('./webserver')
+
+const { server } = initWebServer()
+
