@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/edrcq/node_d01_ex00/issues"
   },
-  "homepage": "https://github.com/edrcq/node_d01_ex00#readme"
+  "homepage": "https://github.com/edrcq/node_d01_ex00#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
