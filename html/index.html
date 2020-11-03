@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Socket.io</title>
+</head>
+<body>
+    
+    <script src="/front/socket.io.js"></script>
+    <script>
+        const socket = io('http://localhost:4021')
+
+        socket.on('login', data => {
+            console.log('login response !', data)
+        })
+
+        socket.on('other_login', data => {
+            console.log('another person just logged in', data)
+        })
+    </script>
+</body>
+</html>

@@ -13,7 +13,7 @@ function initWebServer() {
     // ceci est un middleware, qui converti le JSON body en req.body, objet utilisable en JS
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
-
+    app.use('/front', express.static('html'))
     // Bind le router sur l'url /
     app.use('/', router)
 
