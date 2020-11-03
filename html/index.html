@@ -19,14 +19,17 @@
             console.log('another person just logged in', data)
         })
 
+        // send message to everyone
         socket.on('message', data => {
             console.log('Other: ', data)
         })
 
+        // receive message from everyone
         socket.on('other_message', datas => {
             console.log(datas.id, ': ', datas.message)
         })
 
+        // receive message from someone
         socket.on('messageFrom', datas => {
             console.log(datas.from, ': ', datas.message)
         })

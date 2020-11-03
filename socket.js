@@ -21,6 +21,8 @@ function initSocketServer(server) {
         })
 
         client_socket.on('messageTo', data => {
+            //socket.emit('messageTo', {to: 'jpHJ-2kD6d1u7URjAAAE', message:'hello friends!'});
+            console.log('msg, ', client_socket.id, ' to ', data.to, ': ', data.message)
             const datas = {from: client_socket.id, message: data.message}
             io.to(data.to).emit('messageFrom', datas);
         })
