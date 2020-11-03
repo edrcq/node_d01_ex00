@@ -6,13 +6,18 @@
     <title>Test Socket.io</title>
 </head>
 <body>
-    
+<input type="text" id="pseudo">
+<button onclick="login()">login</button>
     <script src="/front/socket.io.js"></script>
+<div style="display:none" id="chatBox">
+    test
+</div>
     <script>
         const socket = io('http://localhost:4021')
 
         socket.on('login', data => {
             console.log('login response !', data)
+            document.getElementById("chatBox").style.display="block"
         })
 
         socket.on('other_login', data => {
@@ -26,13 +31,17 @@
 
         // receive message from everyone
         socket.on('other_message', datas => {
-            console.log(datas.id, ': ', datas.message)
+            console.log(datas.pseudo, ': ', datas.message)
         })
 
         // receive message from someone
         socket.on('messageFrom', datas => {
             console.log(datas.from, ': ', datas.message)
         })
+        function login(){
+            this.pseudo = document.getElementById("pseudo").value;
+            socket.emit('login', { pseudo: this.pseudo })
+        }
     </script>
 </body>
 </html>

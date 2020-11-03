@@ -3,6 +3,7 @@ const { Store } = require('./Store.class')
 
 const store = {
     'resources': new Store('resources', { path: `${__dirname}/data/resources.json`}),
+    'connectedUsers': []
 }
 
 
@@ -22,6 +23,5 @@ const sigs = ['SIGINT', 'SIGKILL', 'SIGTERM']
 // for (let sig of sigs) {
 //     process.on(sig, exitSaveStore)
 // }
-
 
 module.exports = store
