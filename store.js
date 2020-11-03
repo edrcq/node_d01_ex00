@@ -1,9 +1,7 @@
+const Store = require('./Store.class')
+
 const store = {
-    'resources': {
-        res_id: {
-            hello: 'world'
-        }
-    }
+    'resources': new Store('resources')
 }
 
 console.log(store)
