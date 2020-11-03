@@ -6,7 +6,16 @@
     <title>Test Socket.io</title>
 </head>
 <body>
-    
+
+    <div id="auth">
+        <div>
+            <input v-model="pseudo" /><br />
+            <button @click="tryLogin">Se connecter</button>
+        </div>
+    </div>
+    <div id="app" style="display: none;"></div>
+
+
     <script src="/front/socket.io.js"></script>
     <script>
         const socket = io('http://localhost:4021')
@@ -19,5 +28,26 @@
             console.log('another person just logged in', data)
         })
     </script>
+
+    <script src="/front/vue.js"></script>
+    <script>
+        const auth = new Vue({
+            el: '#auth',
+
+            data() { return {
+                pseudo: '',
+            }},
+
+            methods: {
+                tryLogin() {
+                    if (this.pseudo.length > 0) {
+                        socket.emit('login', { pseudo: this.pseudo })
+                    }
+                }
+            }
+        })
+    </script>
+
+    
 </body>
 </html>
