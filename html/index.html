@@ -6,18 +6,26 @@
     <title>Test Socket.io</title>
 </head>
 <body>
-    
+<input type="text" name="">
+<button onclick="login()">login</button>
     <script src="/front/socket.io.js"></script>
+<div style="display:none" id="chatBox">
+    test
+</div>
     <script>
         const socket = io('http://localhost:4021')
 
         socket.on('login', data => {
             console.log('login response !', data)
+            document.getElementById("chatBox").style.display="block"
         })
 
         socket.on('other_login', data => {
             console.log('another person just logged in', data)
         })
+        function login(){
+            socket.emit('login', { pseudo: this.pseudo })
+        }
     </script>
 </body>
 </html>
