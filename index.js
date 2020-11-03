@@ -1,12 +1,14 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const router = require('./routes')
 
 const app = express()
 
 app.disable('x-powered-by')
 
-app.use(bodyParser.json())
+// ceci est un middleware, qui converti le JSON body en req.body, objet utilisable en JS
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(function(req, res, next) {
     if (req.url === '/secret') {

@@ -2,6 +2,11 @@ const { Router } = require('express')
 const router = Router()
 const store = require('./store')
 
+router.use((req, res, next) => {
+    console.log('hello')
+    next()
+})
+
 // GET ONE
 router.get('/resource/:id', (req, res) => {
     // const id = req.params.id
