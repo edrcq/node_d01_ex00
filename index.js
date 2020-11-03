@@ -1,15 +1,26 @@
-const http = require('http')
+const express = require('express')
+const bodyParser = require('body-parser')
+const router = require('./routes')
 
-function requestHandler(request, response) {
-    console.log(request.url, request.url.split('/'))
+const app = express()
 
-    response.write('Hello');
-    response.end();
-}
+app.disable('x-powered-by')
 
-const server = http.createServer(requestHandler)
+app.use(bodyParser.json())
 
-server.listen(4021, () => {
-    console.log('Web server listening on http://localhost:4021')
+app.use(function(req, res, next) {
+    if (req.url === '/secret') {
+        console.log("big secret here")
+        return res.json({ yousee: 'that' })
+    }
+    next()
 })
 
+// Bind le router sur l'url /
+app.use('/', router)
+
+app.listen(4021, (err) => {
+    if (!err) {
+        console.log('Listening on 4021')
+    }
+})
