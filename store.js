@@ -17,11 +17,8 @@ function exitSaveStore() {
     })
 }
 
-const sigs = ['SIGINT', 'SIGKILL', 'SIGTERM']
+process.on('exit', exitSaveStore)
 
-for (let sig of sigs) {
-    process.on(sig, exitSaveStore)
-}
 
 
 
