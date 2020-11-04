@@ -9,7 +9,7 @@
 
     <div id="auth">
         <div>
-            <input v-model="pseudo" /><br />
+            <input v-model="pseudo"  @keypress.enter="tryLogin" /><br />
             <button @click="tryLogin">Se connecter</button>
         </div>
     </div>
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/front/socket.io.js"></script>
     <script>
         const socket = io('http://localhost:4021')
@@ -44,6 +44,11 @@
         socket.on('other_login', data => {
             console.log('another person just logged in', data)
             app.count = data.count
+            app.users.push(data.pseudo)
+            app.messages.push({
+                pseudo: 'WELCOME TO',
+                text: data.pseudo
+            })
         })
 
         socket.on('new_msg', data => {
@@ -101,7 +106,10 @@
                 },
 
                 alertList() {
-
+                    swal({
+                        icon: 'info',
+                        text: this.users.join(', ')
+                    })
                 }
             }
         })
