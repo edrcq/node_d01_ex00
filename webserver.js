@@ -2,6 +2,8 @@ const express = require('express')
 const http = require('http')
 const router = require('./routes')
 
+const port = process.env.PORT || 4021
+
 function initWebServer() {
 
     const app = express()
@@ -17,9 +19,9 @@ function initWebServer() {
     // Bind le router sur l'url /
     app.use('/', router)
 
-    server.listen(4021, (err) => {
+    server.listen(port, (err) => {
         if (!err) {
-            console.log('Listening on 4021')
+            console.log('Listening on ' + port)
         }
     })
 
